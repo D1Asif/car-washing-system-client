@@ -19,7 +19,7 @@ export const serviceApi = baseApi.injectEndpoints({
         }),
         getSlotById: builder.query({
             query: (slotId) => ({
-                url: `/services/${slotId}`
+                url: `/slots/${slotId}`
             })
         }),
     })

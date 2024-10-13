@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { format } from 'date-fns'
 import { Calendar } from 'phosphor-react'
 import { Button, DatePicker, Popover, PopoverAction, PopoverContent } from 'keep-react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useGetSlotsOfServiceQuery } from '../../redux/features/service/serviceApi'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { pickSlot } from '../../redux/features/slot/slotSlice'
@@ -90,7 +90,11 @@ export default function SlotPicker() {
                     )
                 }
             </div>
-            {slotState.slotId && <Button>Book Slot</Button>}
+            {slotState.slotId && (
+                <Button>
+                    <Link to='/booking'>Book Slot</Link>
+                </Button>
+            )}
         </div>
     )
 }
