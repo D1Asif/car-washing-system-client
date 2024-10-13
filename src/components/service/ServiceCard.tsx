@@ -1,4 +1,5 @@
 import { Button, Card, CardContent, CardDescription, CardTitle } from "keep-react";
+import { Link } from "react-router-dom";
 
 export type TService = {
     _id: string;
@@ -10,7 +11,7 @@ export type TService = {
     tags: string[];
 }
 
-export default function ServiceCard({ service }: {service: TService}) {
+export default function ServiceCard({ service }: { service: TService }) {
     return (
         <Card className="max-w-full">
             <CardContent className="space-y-4">
@@ -19,7 +20,11 @@ export default function ServiceCard({ service }: {service: TService}) {
                     {service.description}
                 </CardDescription>
                 <p className='text-xl font-semibold'>${service.price}</p>
-                <Button>See Details</Button>
+                <Button>
+                    <Link to={`/services/${service._id}`}>
+                        See Details
+                    </Link>
+                </Button>
             </CardContent>
         </Card>
     )

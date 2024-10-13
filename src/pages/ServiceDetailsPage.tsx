@@ -1,6 +1,9 @@
+import ServiceInfo from "../components/service/ServiceInfo";
 
 export default function ServiceDetailsPage() {
   return (
-    <div>ServiceDetailsPage</div>
+    <div>
+      <ServiceInfo />
+    </div>
   )
 }
