@@ -1,7 +1,10 @@
 import { Button, Card, CardContent, CardDescription, CardHeader, CardTitle, Input, Label } from 'keep-react'
-import { useState } from 'react';
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { z } from 'zod';
+import { useLoginMutation } from '../../redux/features/auth/authApi';
+import { useAppDispatch } from '../../redux/hooks';
+import { setUser } from '../../redux/features/auth/authSlice';
 
 const loginSchema = z.object({
     email: z.string().email("Invalid email address"),
@@ -17,7 +20,37 @@ export default function LoginForm() {
     });
     const [errors, setErrors] = useState<Partial<Record<keyof LoginFormData, string>>>({});
     const [generalError, setGeneralError] = useState<string | null>(null);
-    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [searchParams] = useSearchParams();
+
+    const fromReviewSection = searchParams.get("redirect") === 'review';
+
+    const navigate = useNavigate();
+
+    const [login, { data: loginData, isLoading: isSubmitting, error: loginError, isError }] = useLoginMutation();
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        if (loginData?.success) {
+            console.log("Login successful:", loginData);
+
+            dispatch(setUser({
+                user: loginData.data,
+                token: loginData.token
+            }))
+
+            if (fromReviewSection) {
+                navigate("/#review")
+            } else {
+                navigate("/dashboard")
+            }
+        }
+    }, [fromReviewSection, loginData]);
+
+    if (isError) {
+        console.error("Login failed:", loginError);
+        // Show a general error message on failure
+        setGeneralError("Login failed. Please check your credentials and try again.");
+    }
 
     // Handle form field changes
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,36 +71,7 @@ export default function LoginForm() {
         const result = loginSchema.safeParse(formData);
 
         if (result.success) {
-            console.log(formData);
-            // try {
-            //     setIsSubmitting(true); // Disable the form while submitting
-
-            //     // Make the API POST request
-            //     const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
-            //         method: 'POST',
-            //         headers: {
-            //             'Content-Type': 'application/json',
-            //         },
-            //         body: JSON.stringify(formData),
-            //     });
-
-            //     // Handle the response
-            //     if (response.ok) {
-            //         const data = await response.json();
-            //         console.log("Login successful:", data);
-            //         // Redirect or handle success response here
-            //     } else {
-            //         const errorData = await response.json();
-            //         console.error("Login failed:", errorData);
-            //         // Show a general error message on failure
-            //         setGeneralError("Login failed. Please check your credentials and try again.");
-            //     }
-            // } catch (error) {
-            //     console.error("Network error:", error);
-            //     setGeneralError("An error occurred. Please check your network connection and try again.");
-            // } finally {
-            //     setIsSubmitting(false); // Re-enable the form
-            // }
+            login(formData);
         } else {
             // Set validation errors if validation fails
             const newErrors: Partial<Record<keyof LoginFormData, string>> = {};

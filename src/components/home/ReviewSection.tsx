@@ -1,30 +1,46 @@
 import { Button, Rating, RatingStar, Textarea } from "keep-react";
-import { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import ReviewList from "../reviews/ReviewList";
+import { useAppSelector } from "../../redux/hooks";
+import { useCurrentToken } from "../../redux/features/auth/authSlice";
 
 
 export default function ReviewSection() {
-    const isLoggedIn = false;
-    const [isReviewGiven, setIsReviewGiven] = useState(false)
+    const token = useAppSelector(useCurrentToken);
+    const [isReviewGiven, setIsReviewGiven] = useState(false);
+    const [comment, setComment] = useState("");
+    const reviewRef = useRef<HTMLDivElement | null>(null);
 
     const handleRating = (value: number | undefined) => {
         console.log(value);
+    }
 
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         setIsReviewGiven(true)
     }
 
+    useEffect(() => {
+        if (location.hash === "#review") {
+            if (reviewRef.current) {
+                reviewRef.current.scrollIntoView({ behavior: "smooth" });
+            }
+        }
+    }, []);
+
     return (
         <div>
-            <h3 className="text-heading-5 font-semibold mb-6" id="review">Reviews</h3>
+            <h3 className="text-heading-5 font-semibold mb-6" ref={reviewRef}>Reviews</h3>
             {
                 !isReviewGiven ? (
-                    <form 
+                    <form
                         className="flex flex-col items-center justify-center gap-5 mx-auto max-w-[500px] border rounded-xl p-6 relative"
+                        onSubmit={handleSubmit}
                     >
-                        {!isLoggedIn && (
+                        {!token && (
                             <div className="absolute flex justify-center items-center top-0 bottom-0 left-0 right-0 rounded-xl bg-black/40">
-                                <Link to="/login">
+                                <Link to="/login?redirect=review">
                                     <Button size="lg">Login</Button>
                                 </Link>
                             </div>
@@ -35,7 +51,11 @@ export default function ReviewSection() {
                                 <RatingStar value={rating} key={rating}></RatingStar>
                             ))}
                         </Rating>
-                        <Textarea placeholder="Write your message here." rows={4} />
+                        <Textarea 
+                            onChange={(e) => {setComment(e.target.value)}}
+                            value={comment}
+                            placeholder="Write your message here." rows={4}
+                        />
                         <Button type="submit">Submit</Button>
                     </form>
                 ) : (

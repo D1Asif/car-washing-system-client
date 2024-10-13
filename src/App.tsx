@@ -9,7 +9,7 @@ import HomePage from './pages/HomePage'
 import PrivateRoute from './components/auth/PrivateRoute'
 import DashboardPage from './pages/DashboardPage'
 import NotFoundPage from './pages/NotFoundPage'
-import Layout from './components/layout/layout'
+import Layout from './components/layout/Layout'
 
 function App() {
 

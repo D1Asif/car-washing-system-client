@@ -12,7 +12,7 @@ export default function FeaturedServiceSection() {
             tags: ["featured"]
         },
         {
-            _id: "66e9b35bb2f5268274bfe1e6",
+            _id: "66e9b35bb2f5268274bfe1e7",
             name: "Car Wash Pro 2",
             description: "Professional car washing service 2",
             price: 50,
@@ -21,7 +21,7 @@ export default function FeaturedServiceSection() {
             tags: ["featured"]
         },
         {
-            _id: "66e9b35bb2f5268274bfe1e6",
+            _id: "66e9b35bb2f5268274bfe1e8",
             name: "Car Wash Pro 2",
             description: "Professional car washing service 2",
             price: 50,
@@ -30,7 +30,7 @@ export default function FeaturedServiceSection() {
             tags: ["featured"]
         },
         {
-            _id: "66e9b35bb2f5268274bfe1e6",
+            _id: "66e9b35bb2f5268274bfe1e9",
             name: "Car Wash Pro 2",
             description: "Professional car washing service 2",
             price: 50,
@@ -39,7 +39,7 @@ export default function FeaturedServiceSection() {
             tags: ["featured"]
         },
         {
-            _id: "66e9b35bb2f5268274bfe1e6",
+            _id: "66e9b35bb2f5268274bfe1e0",
             name: "Car Wash Pro 2",
             description: "Professional car washing service 2",
             price: 50,
@@ -48,7 +48,7 @@ export default function FeaturedServiceSection() {
             tags: ["featured"]
         },
         {
-            _id: "66e9b35bb2f5268274bfe1e6",
+            _id: "66e9b35bb2f5268274bfe1e1",
             name: "Car Wash Pro 2",
             description: "Professional car washing service 2",
             price: 50,
