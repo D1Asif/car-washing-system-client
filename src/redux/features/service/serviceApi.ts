@@ -11,18 +11,11 @@ export const serviceApi = baseApi.injectEndpoints({
             query: (serviceId) => ({
                 url: `/services/${serviceId}`
             })
-        }),
-        getSlotsOfService: builder.query({
-            query: (query) => ({
-                url: `/slots?${query}`
-            })
-        }),
-        getSlotById: builder.query({
-            query: (slotId) => ({
-                url: `/slots/${slotId}`
-            })
-        }),
+        })
     })
 })
 
-export const { useGetAllServicesQuery, useGetServiceByIdQuery, useGetSlotsOfServiceQuery, useGetSlotByIdQuery } = serviceApi
+export const {
+    useGetAllServicesQuery,
+    useGetServiceByIdQuery
+} = serviceApi

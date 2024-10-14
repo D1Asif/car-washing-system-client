@@ -2,10 +2,15 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
 
 export type TUser = {
-    userId: string
-    role: string
-    iat: number
-    exp: number
+    _id: string;
+    name: string;
+    email: string;
+    phone: string;
+    address: string;
+    role: "user" | "admin"; // Assuming role can be "user" or "admin"
+    createdAt: string; // ISO 8601 date string
+    updatedAt: string; // ISO 8601 date string
+    __v: number;
 }
 
 type TAuthState = {
