@@ -86,7 +86,7 @@ export default function SlotPicker() {
                             </div>
                         ))
                     ) : (
-                        !isLoading && <h3 className="text-center text-heading-6">No Slots found in this date</h3>
+                        !isLoading && <h3 className="text-heading-6">No Slots found in this date</h3>
                     )
                 }
             </div>
