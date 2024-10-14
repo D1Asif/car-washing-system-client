@@ -28,11 +28,8 @@ export default function NavbarComponent() {
     let nextSlotTime;
 
     if (data?.data && data?.data?.length > 0) {
-        console.log(data?.data);
         nextSlotTime = data?.data[0].slotDateTime;
     }
-
-    console.log(nextSlotTime);
 
     const menuItems: TMenuItem[] = [
         {
@@ -51,6 +48,11 @@ export default function NavbarComponent() {
         </NavbarItem>
     ))
 
+    const handleLogout = () => {
+        dispatch(logout())
+        window.location.reload();
+    }
+
     return (
         <Navbar className='flex justify-center'>
             <NavbarContainer className='px-8 md:px-24 max-w-[3000px]'>
@@ -63,7 +65,7 @@ export default function NavbarComponent() {
                     {nextSlotTime && <Countdown targetDate={nextSlotTime} />}
                     {menu}
                     {token ? (
-                        <NavbarItem active className='ml-4 bg-error-600 hover:bg-error-700' onClick={() => dispatch(logout())}>
+                        <NavbarItem active className='ml-4 bg-error-600 hover:bg-error-700' onClick={handleLogout}>
                             Logout
                         </NavbarItem>
                     ) : (
@@ -77,7 +79,7 @@ export default function NavbarComponent() {
                     {nextSlotTime && <Countdown targetDate={nextSlotTime} />}
                     {menu}
                     {token ? (
-                        <NavbarItem active className='ml-4 bg-error-600 hover:bg-error-700' onClick={() => dispatch(logout())}>
+                        <NavbarItem active className='ml-4 bg-error-600 hover:bg-error-700' onClick={handleLogout}>
                             Logout
                         </NavbarItem>
                     ) : (
@@ -87,6 +89,6 @@ export default function NavbarComponent() {
                     )}
                 </NavbarCollapse>
             </NavbarContainer>
-        </Navbar>
+        </Navbar >
     )
 }

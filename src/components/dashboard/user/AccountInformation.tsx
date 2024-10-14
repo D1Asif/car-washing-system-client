@@ -24,8 +24,6 @@ export default function AccountInformation() {
     })
   }
 
-  console.log(data);
-
   const handleSubmit = () => {
     updateUserAccountInfo(formData)
     setIsEditing(false)

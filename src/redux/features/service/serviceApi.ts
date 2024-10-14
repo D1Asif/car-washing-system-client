@@ -11,11 +11,19 @@ export const serviceApi = baseApi.injectEndpoints({
             query: (serviceId) => ({
                 url: `/services/${serviceId}`
             })
+        }),
+        createNewService: builder.mutation({
+            query: (body) => ({
+                url: "/services",
+                method: 'POST',
+                body
+            })
         })
     })
 })
 
 export const {
     useGetAllServicesQuery,
-    useGetServiceByIdQuery
+    useGetServiceByIdQuery,
+    useCreateNewServiceMutation
 } = serviceApi

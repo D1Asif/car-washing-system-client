@@ -7,8 +7,6 @@ import { useAppSelector } from "../redux/hooks"
 export default function DashboardPage() {
   const user = useAppSelector(selectCurrentUser);
 
-  console.log(user);
-
   if (user?.role === 'admin') {
     return <AdminDashboard />
   }
