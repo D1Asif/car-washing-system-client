@@ -31,8 +31,6 @@ export default function LoginForm() {
 
     useEffect(() => {
         if (loginData?.success) {
-            console.log("Login successful:", loginData);
-
             dispatch(setUser({
                 user: loginData.data,
                 token: loginData.token

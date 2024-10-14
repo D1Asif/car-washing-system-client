@@ -42,8 +42,6 @@ export default function SlotPicker() {
     const dispatch = useAppDispatch();
     const slotState = useAppSelector((selector) => selector.slot);
 
-    console.log(slotState.slotId);
-
     return (
         <div>
             <h2 className="text-3xl font-semibold mb-4">Pick a Slot</h2>

@@ -11,6 +11,8 @@ import Logo from "../../assets/logo-black.png"
 import { Link } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { logout, useCurrentToken } from '../../redux/features/auth/authSlice'
+import { useGetUsersBookingsQuery } from '../../redux/features/booking/bookingApi'
+import Countdown from '../dashboard/user/Countdown'
 
 type TMenuItem = {
     path: string,
@@ -20,6 +22,17 @@ type TMenuItem = {
 export default function NavbarComponent() {
     const dispatch = useAppDispatch();
     const token = useAppSelector(useCurrentToken);
+
+    const { data } = useGetUsersBookingsQuery("time=upcoming");
+
+    let nextSlotTime;
+
+    if (data?.data && data?.data?.length > 0) {
+        console.log(data?.data);
+        nextSlotTime = data?.data[0].slotDateTime;
+    }
+
+    console.log(nextSlotTime);
 
     const menuItems: TMenuItem[] = [
         {
@@ -47,6 +60,7 @@ export default function NavbarComponent() {
                     </Link>
                 </NavbarBrand>
                 <NavbarList>
+                    {nextSlotTime && <Countdown targetDate={nextSlotTime} />}
                     {menu}
                     {token ? (
                         <NavbarItem active className='ml-4 bg-error-600 hover:bg-error-700' onClick={() => dispatch(logout())}>
@@ -60,6 +74,7 @@ export default function NavbarComponent() {
                 </NavbarList>
                 <NavbarCollapseBtn />
                 <NavbarCollapse>
+                    {nextSlotTime && <Countdown targetDate={nextSlotTime} />}
                     {menu}
                     {token ? (
                         <NavbarItem active className='ml-4 bg-error-600 hover:bg-error-700' onClick={() => dispatch(logout())}>
