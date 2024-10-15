@@ -50,7 +50,6 @@ export default function NavbarComponent() {
 
     const handleLogout = () => {
         dispatch(logout())
-        window.location.reload();
     }
 
     return (

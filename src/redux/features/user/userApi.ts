@@ -7,9 +7,27 @@ export const userApi = baseApi.injectEndpoints({
                 url: "/auth/update-account-info",
                 method: 'PUT',
                 body
-            })
+            }),
+            invalidatesTags: ['Users']
+        }),
+        getAllUsers: builder.query({
+            query: () => ({
+                url: "/auth/users"
+            }),
+            providesTags: ['Users']
+        }),
+        makeUserAdmin: builder.mutation({
+            query: (userId) => ({
+                url: `auth/make-user-admin/${userId}`,
+                method: 'PUT'
+            }),
+            invalidatesTags: ['Users']
         })
     })
 })
 
-export const { useUpdateUserAccountInfoMutation } = userApi
+export const {
+    useUpdateUserAccountInfoMutation,
+    useGetAllUsersQuery,
+    useMakeUserAdminMutation
+} = userApi

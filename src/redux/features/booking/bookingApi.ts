@@ -6,8 +6,13 @@ export const bookingApi = baseApi.injectEndpoints({
             query: (query) => ({
                 url: `/my-bookings?${query}`
             })
+        }),
+        getAllBookings: builder.query({
+            query: () => ({
+                url: "/bookings"
+            })
         })
     })
 })
 
-export const { useGetUsersBookingsQuery } = bookingApi
+export const { useGetUsersBookingsQuery, useGetAllBookingsQuery } = bookingApi

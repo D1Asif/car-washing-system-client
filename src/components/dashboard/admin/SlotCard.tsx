@@ -3,9 +3,8 @@ import { TSlot } from "../../service/SlotPicker";
 import { useUpdateSlotStatusMutation } from "../../../redux/features/slot/slotApi";
 import { useEffect } from "react";
 
-
 export default function SlotCard({ slot }: { slot: TSlot }) {
-  const [updateSlotStatus, { isError, data, isLoading }] = useUpdateSlotStatusMutation();
+  const [updateSlotStatus, { isError, isLoading }] = useUpdateSlotStatusMutation();
 
   const handleStatus = (status: string) => {
     updateSlotStatus({
@@ -15,8 +14,6 @@ export default function SlotCard({ slot }: { slot: TSlot }) {
       }
     })
   }
-
-  console.log(data);
 
   useEffect(() => {
     if (isError) {

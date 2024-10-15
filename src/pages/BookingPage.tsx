@@ -18,9 +18,9 @@ export default function BookingPage() {
     <div className="flex flex-col lg:flex-row gap-20">
       {/* Slot Summary */}
       <div
-        className="p-6 border rounded-lg w-full max-h-[400px] text-xl"
+        className="p-6 border rounded-lg w-full max-h-[400px] text-lg"
       >
-        <h1 className="text-heading-5 font-semibold mb-4">Service Details</h1>
+        <h1 className="text-heading-6 font-semibold mb-4">Service Details</h1>
         <p>
           Service name: <b>{slot?.service.name}</b>
         </p>

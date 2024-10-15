@@ -26,7 +26,7 @@ export default function LoginForm() {
 
     const navigate = useNavigate();
 
-    const [login, { data: loginData, isLoading: isSubmitting, error: loginError, isError }] = useLoginMutation();
+    const [login, { data: loginData, isLoading: isSubmitting, error: loginError }] = useLoginMutation();
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -44,11 +44,13 @@ export default function LoginForm() {
         }
     }, [fromReviewSection, loginData]);
 
-    if (isError) {
-        console.error("Login failed:", loginError);
-        // Show a general error message on failure
-        setGeneralError("Login failed. Please check your credentials and try again.");
-    }
+    useEffect(() => {
+        if (loginError) {
+            console.error("Login failed:", loginError);
+            // Show a general error message on failure
+            setGeneralError("Login failed. Please check your credentials and try again.");
+        }
+    }, [loginError]);
 
     // Handle form field changes
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

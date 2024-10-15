@@ -40,31 +40,29 @@ export default function AccountInformation() {
 
   return (
     <div>
-      <div className="flex gap-4">
-        <h1 className="text-heading-5 font-semibold text-metal-900">
+      <div className="flex gap-4 mt-2">
+        <h1 className="text-heading-6 font-semibold">
           Account Information
         </h1>
         <div
-          className="cursor-pointer flex items-center justify-center text-primary-500"
+          className="cursor-pointer border-2 border-blue-500 rounded-full size-8 flex items-center justify-center text-primary-500"
         >
           {
             isEditing ? (
               <Check
-                size={28}
-                weight="bold"
+                size={26}
                 onClick={handleSubmit}
               />
             ) : (
               <PencilSimple
-                size={28}
-                weight="bold"
+                size={20}
                 onClick={() => setIsEditing(true)}
               />
             )
           }
         </div>
       </div>
-      <div className="text-xl space-y-2 mt-2">
+      <div className="text-lg space-y-2 mt-2">
         {isLoading && <Spinner />}
         <p>
           Name: &nbsp;
