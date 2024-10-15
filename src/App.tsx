@@ -11,11 +11,13 @@ import DashboardPage from './pages/DashboardPage'
 import NotFoundPage from './pages/NotFoundPage'
 import Layout from './components/layout/Layout'
 import { ToastWrapper } from 'keep-react'
+import ScrollTop from './components/ui/ScrollTOp'
 
 function App() {
 
   return (
     <div>
+      <ScrollTop />
       <ToastWrapper
         toastOptions={{
           classNames: {

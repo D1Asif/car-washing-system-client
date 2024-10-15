@@ -83,7 +83,7 @@ export default function LoginForm() {
     };
 
     return (
-        <Card className="max-w-md">
+        <Card className="w-full">
             <CardContent className="space-y-3">
                 <CardHeader>
                     <CardTitle>Login</CardTitle>

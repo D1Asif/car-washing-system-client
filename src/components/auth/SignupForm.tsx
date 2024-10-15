@@ -93,13 +93,13 @@ export default function SignupForm() {
     };
 
     return (
-        <Card className="max-w-md">
+        <Card className='w-full'>
             <CardContent className="space-y-3">
                 <CardHeader>
                     <CardTitle>Create an account</CardTitle>
                     <CardDescription>
                         Already have an account? {" "}
-                        <Link to="/signup" className='text-primary-400'>
+                        <Link to="/login" className='text-primary-400'>
                             Log in
                         </Link>
                     </CardDescription>
