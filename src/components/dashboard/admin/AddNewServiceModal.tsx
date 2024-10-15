@@ -17,7 +17,7 @@ export default function AddNewServiceModal({ service }: { service?: TService }) 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const [createNewService, { isError: createError }] = useCreateNewServiceMutation();
-    const [updateService, {isError: updateError, data, error}] = useUpdateServiceMutation()
+    const [updateService, { isError: updateError }] = useUpdateServiceMutation()
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { id, value } = e.target;
@@ -44,13 +44,17 @@ export default function AddNewServiceModal({ service }: { service?: TService }) 
             })
         } else {
             createNewService(body);
+            setFormState({
+                name: '',
+                description: '',
+                price: '',
+                duration: '',
+                tags: ''
+            })
         }
 
         setIsModalOpen(false);
     };
-
-    console.log(data);
-    console.log(error);
 
     useEffect(() => {
         if (createError || updateError) {

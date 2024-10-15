@@ -1,7 +1,8 @@
-import { Dropdown, DropdownAction, DropdownContent, DropdownItem, DropdownList, Spinner, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "keep-react";
+import { Dropdown, DropdownAction, DropdownContent, DropdownList, Spinner, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "keep-react";
 import AddNewServiceModal from "./AddNewServiceModal";
 import { DotsThreeOutlineVertical } from "phosphor-react";
 import { useGetAllServicesQuery } from "../../../redux/features/service/serviceApi";
+import DeleteServiceModal from "./DeleteServiceModal";
 
 type TService = {
   _id: string;
@@ -52,7 +53,7 @@ export default function ServiceManagement() {
           {services?.map((service: TService) => (
             <TableRow key={service?._id}>
               <TableCell>{service.name}</TableCell>
-              <TableCell>{service.price}</TableCell>
+              <TableCell>${service.price}</TableCell>
               <TableCell>{service.duration}</TableCell>
               <TableCell>{service?.tags?.join(", ") || "None"}</TableCell>
               <TableCell>
@@ -65,7 +66,7 @@ export default function ServiceManagement() {
                   <DropdownContent className="max-w-[200px] border border-metal-100 p-3">
                     <DropdownList>
                       <AddNewServiceModal service={service} />
-                      <DropdownItem>Delete</DropdownItem>
+                      <DeleteServiceModal serviceId={service._id} />
                     </DropdownList>
                   </DropdownContent>
                 </Dropdown>
@@ -78,6 +79,9 @@ export default function ServiceManagement() {
         <div className="flex justify-center">
           <Spinner className="my-3" />
         </div>
+      )}
+      {!isLoading && services?.length === 0 && (
+        <h3 className="text-xl text-center mt-5">No services found!</h3>
       )}
     </div>
   )
