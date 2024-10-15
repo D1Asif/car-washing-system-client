@@ -3,6 +3,7 @@ import ServiceFilter from "../components/service/ServiceFilter";
 import ServiceList from "../components/service/ServiceList";
 import ServiceSearch from "../components/service/ServiceSearch";
 import { useGetAllServicesQuery } from "../redux/features/service/serviceApi";
+import { Spinner } from "keep-react";
 
 export default function ServicesPage() {
   const [searchParams] = useSearchParams();
@@ -27,7 +28,9 @@ export default function ServicesPage() {
       }
       {
         isLoading && (
-          <h3 className="text-center text-2xl">Loading...</h3>
+          <div className="flex justify-center">
+            <Spinner className="mx-auto" />
+          </div>
         )
       }
     </div>

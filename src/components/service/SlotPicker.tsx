@@ -17,13 +17,13 @@ const getFormattedDate = (date: Date | undefined) => {
     return `${year}-${month}-${day}`;
 };
 
-type TSlot = {
+export type TSlot = {
     _id: string;
     service: string;
     date: string;        // In ISO 8601 format (e.g., "2024-06-15T00:00:00.000Z")
     startTime: string;   // Time in "HH:mm" format
     endTime: string;     // Time in "HH:mm" format
-    isBooked: "available" | "booked";  // Assuming "available" and "booked" are possible values
+    isBooked: "available" | "booked" | "canceled";  // Assuming "available" and "booked" are possible values
 }
 
 export default function SlotPicker() {
@@ -60,7 +60,7 @@ export default function SlotPicker() {
                     <DatePicker mode="single" selected={date} onSelect={setDate} showOutsideDays={true} />
                 </PopoverContent>
             </Popover>
-            <div className='grid grid-cols-3 gap-5 my-5'>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-5'>
                 {
                     slots?.length > 0 ? (
                         slots?.map((slot: TSlot) => (

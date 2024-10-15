@@ -5,19 +5,38 @@ export const slotApi = baseApi.injectEndpoints({
         getSlotsOfService: builder.query({
             query: (query) => ({
                 url: `/slots?${query}`
-            })
+            }),
+            providesTags: ['Slots']
         }),
         getSlotById: builder.query({
             query: (slotId) => ({
                 url: `/slots/${slotId}`
-            })
+            }),
+            providesTags: ['Slots']
         }),
         bookSlot: builder.mutation({
             query: (body) => ({
                 url: "/bookings",
                 method: 'POST',
                 body
-            })
+            }),
+            invalidatesTags: ['Slots']
+        }),
+        createSlots: builder.mutation({
+            query: (body) => ({
+                url: "services/slots",
+                method: 'POST',
+                body
+            }),
+            invalidatesTags: ['Slots']
+        }),
+        updateSlotStatus: builder.mutation({
+            query: (data) => ({
+                url: `slots/update-status/${data.slotId}`,
+                method: 'PUT',
+                body: data.body
+            }),
+            invalidatesTags: ['Slots']
         })
     })
 })
@@ -25,5 +44,7 @@ export const slotApi = baseApi.injectEndpoints({
 export const {
     useGetSlotsOfServiceQuery,
     useGetSlotByIdQuery,
-    useBookSlotMutation
+    useBookSlotMutation,
+    useCreateSlotsMutation,
+    useUpdateSlotStatusMutation
 } = slotApi
