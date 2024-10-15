@@ -1,19 +1,23 @@
-import { Button, Input, Label, Modal, ModalAction, ModalClose, ModalContent, toast } from "keep-react";
+import { Button, DropdownItem, Input, Label, Modal, ModalAction, ModalClose, ModalContent, toast } from "keep-react";
 import { useEffect, useState } from "react";
-import { useCreateNewServiceMutation } from "../../../redux/features/service/serviceApi";
+import { useCreateNewServiceMutation, useUpdateServiceMutation } from "../../../redux/features/service/serviceApi";
+import { TService } from "../../service/ServiceCard";
 
 
-export default function AddNewServiceModal() {
+export default function AddNewServiceModal({ service }: { service?: TService }) {
+    const isEditing = service?._id ? true : false;
+
     const [formState, setFormState] = useState({
-        name: '',
-        description: '',
-        price: '',
-        duration: '',
-        tags: ''
+        name: isEditing ? service?.name : '',
+        description: isEditing ? service?.description : '',
+        price: isEditing ? service?.price : '',
+        duration: isEditing ? service?.duration : '',
+        tags: isEditing ? service?.tags.join(",") : ''
     });
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const [createNewService, { isError, data, error }] = useCreateNewServiceMutation();
+    const [createNewService, { isError: createError }] = useCreateNewServiceMutation();
+    const [updateService, {isError: updateError, data, error}] = useUpdateServiceMutation()
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { id, value } = e.target;
@@ -33,7 +37,14 @@ export default function AddNewServiceModal() {
             tags: formState.tags ? formState.tags.split(",") : []
         }
 
-        createNewService(body);
+        if (isEditing) {
+            updateService({
+                serviceId: service?._id,
+                body
+            })
+        } else {
+            createNewService(body);
+        }
 
         setIsModalOpen(false);
     };
@@ -42,15 +53,25 @@ export default function AddNewServiceModal() {
     console.log(error);
 
     useEffect(() => {
-        if (isError) {
+        if (createError || updateError) {
             toast.error("Something went wrong!")
         }
-    }, [isError])
+    }, [createError, updateError]);
 
     return (
         <Modal isOpen={isModalOpen} onOpenChange={setIsModalOpen}>
             <ModalAction asChild>
-                <Button>Add New Service</Button>
+                {
+                    isEditing ? (
+                        <Button style={{ "all": "unset", "width": "100%" }}>
+                            <DropdownItem className='w-full'>
+                                Edit
+                            </DropdownItem>
+                        </Button>
+                    ) : (
+                        <Button>Add New Service</Button>
+                    )
+                }
             </ModalAction>
             <ModalContent className="w-[20rem] lg:w-[26rem]">
                 <ModalClose className="absolute right-4 top-4" />
@@ -125,7 +146,7 @@ export default function AddNewServiceModal() {
                     </fieldset>
 
                     <Button type="submit" className="mt-3">
-                        Create Service
+                        {isEditing ? "Save Changes" : "Create Service"}
                     </Button>
                 </form>
 

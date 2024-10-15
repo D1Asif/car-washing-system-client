@@ -1,4 +1,4 @@
-import { Dropdown, DropdownAction, DropdownContent, DropdownItem, DropdownList, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "keep-react";
+import { Dropdown, DropdownAction, DropdownContent, DropdownItem, DropdownList, Spinner, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "keep-react";
 import AddNewServiceModal from "./AddNewServiceModal";
 import { DotsThreeOutlineVertical } from "phosphor-react";
 import { useGetAllServicesQuery } from "../../../redux/features/service/serviceApi";
@@ -19,7 +19,7 @@ type TService = {
 export default function ServiceManagement() {
   const tableHeading = ['Service Name', 'Price', 'Duration', 'Tags'];
 
-  const { data } = useGetAllServicesQuery("");
+  const { data, isLoading } = useGetAllServicesQuery("");
 
   const services = data?.data;
 
@@ -50,12 +50,11 @@ export default function ServiceManagement() {
         </TableHeader>
         <TableBody>
           {services?.map((service: TService) => (
-            <TableRow>
+            <TableRow key={service?._id}>
               <TableCell>{service.name}</TableCell>
               <TableCell>{service.price}</TableCell>
               <TableCell>{service.duration}</TableCell>
               <TableCell>{service?.tags?.join(", ") || "None"}</TableCell>
-              {/* <TableCell>34</TableCell> */}
               <TableCell>
                 <Dropdown>
                   <DropdownAction asChild>
@@ -65,7 +64,7 @@ export default function ServiceManagement() {
                   </DropdownAction>
                   <DropdownContent className="max-w-[200px] border border-metal-100 p-3">
                     <DropdownList>
-                      <DropdownItem>Edit</DropdownItem>
+                      <AddNewServiceModal service={service} />
                       <DropdownItem>Delete</DropdownItem>
                     </DropdownList>
                   </DropdownContent>
@@ -75,6 +74,11 @@ export default function ServiceManagement() {
           ))}
         </TableBody>
       </Table>
+      {isLoading && (
+        <div className="flex justify-center">
+          <Spinner className="my-3" />
+        </div>
+      )}
     </div>
   )
 }
