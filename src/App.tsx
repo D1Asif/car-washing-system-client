@@ -11,7 +11,8 @@ import DashboardPage from './pages/DashboardPage'
 import NotFoundPage from './pages/NotFoundPage'
 import Layout from './components/layout/Layout'
 import { ToastWrapper } from 'keep-react'
-import ScrollTop from './components/ui/ScrollTOp'
+import ReviewsPage from './pages/ReviewsPage'
+import ScrollTop from './components/ui/ScrollTop'
 
 function App() {
 
@@ -42,6 +43,7 @@ function App() {
           <Route path="/services" element={<ServicesPage />} />
           <Route path="/services/:serviceId" element={<ServiceDetailsPage />} />
           <Route path="/booking" element={<BookingPage />} />
+          <Route path="/reviews" element={<ReviewsPage />} />
           <Route element={<PrivateRoute />}>
             <Route path='/dashboard' element={<DashboardPage />} />
           </Route>

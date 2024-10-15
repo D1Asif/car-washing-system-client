@@ -1,12 +1,6 @@
 import { Card, CardContent, CardDescription, CardTitle } from 'keep-react'
 import { Star } from 'phosphor-react';
-
-export type TReview = {
-    _id: string;
-    name: string;
-    rating: number; // Assuming rating is out of 5
-    comment: string;
-};
+import { TReview } from './ReviewList';
 
 export default function ReviewCard({ review }: { review: TReview }) {
     const stars = Array(review.rating).fill(0);
@@ -23,7 +17,7 @@ export default function ReviewCard({ review }: { review: TReview }) {
                         ))
                     }
                 </div>
-                <CardTitle>{review.name}</CardTitle>
+                <CardTitle>{review.user.name}</CardTitle>
             </CardContent>
         </Card>
     )
