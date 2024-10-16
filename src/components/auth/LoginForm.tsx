@@ -29,6 +29,8 @@ export default function LoginForm() {
     const [login, { data: loginData, isLoading: isSubmitting, error: loginError }] = useLoginMutation();
     const dispatch = useAppDispatch();
 
+    console.log(fromReviewSection);
+
     useEffect(() => {
         if (loginData?.success) {
             dispatch(setUser({
@@ -37,8 +39,10 @@ export default function LoginForm() {
             }))
 
             if (fromReviewSection) {
+                console.log("yo");
                 navigate("/#review")
             } else {
+                console.log("ye");
                 navigate("/dashboard")
             }
         }
