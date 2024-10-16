@@ -1,9 +1,10 @@
-import { Button, Input, Label } from "keep-react";
+import { Button, Input, Label, toast } from "keep-react";
 import { useAppSelector } from "../../redux/hooks";
 import { selectCurrentUser } from "../../redux/features/auth/authSlice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetSlotByIdQuery } from "../../redux/features/slot/slotApi";
+import { useCreateBookingMutation } from "../../redux/features/booking/bookingApi";
 
 export default function BookingForm() {
     const [formData, setFormData] = useState({
@@ -12,13 +13,14 @@ export default function BookingForm() {
         vehicleModel: '',
         manufacturingYear: '',
         registrationPlate: '',
-        phone: '',
     });
 
     const { slotId } = useAppSelector((selector) => selector.slot)
     const { data } = useGetSlotByIdQuery(slotId || undefined);
+    const [createBooking, { data: creationData, isError }] = useCreateBookingMutation();
 
     const slot = data?.data;
+    const creationResponse = creationData?.data;
 
     const navigate = useNavigate();
 
@@ -42,11 +44,26 @@ export default function BookingForm() {
         const body = {
             ...formData,
             serviceId: slot.service._id,
-            slotId
+            slotId,
+            manufacturingYear: Number(formData.manufacturingYear)
         }
         // Add your form submission logic here
         console.log('Form submitted:', body);
+
+        createBooking(body);
     };
+
+    useEffect(() => {
+        if (creationResponse) {
+            window.location.href = creationResponse.payment_url
+        }
+    }, [creationResponse]);
+
+    useEffect(() => {
+        if (isError) {
+            toast.error("Something went wrong!")
+        }
+    }, [isError]);
 
     return (
         <form className="w-full" onSubmit={handleSubmit}>
@@ -71,7 +88,7 @@ export default function BookingForm() {
             {/* Vehicle Type */}
             <fieldset className="space-y-2 text-lg my-3">
                 <label htmlFor="vehicleType" className="text-md font-normal text-gray-700">
-                    Vehicle Type*
+                    Vehicle Type* (car | truck | SUV | van | motorcycle | bus | electricVehicle | hybridVehicle | bicycle | tractor)
                 </label>
                 <Input
                     id="vehicleType"
@@ -113,7 +130,7 @@ export default function BookingForm() {
             {/* Manufacturing Year */}
             <fieldset className="space-y-2 text-lg my-3">
                 <label htmlFor="manufacturingYear" className="text-md font-normal text-gray-700">
-                    Manufacturing Year*
+                    Manufacturing Year* (Must be greater than 1886)
                 </label>
                 <Input
                     id="manufacturingYear"

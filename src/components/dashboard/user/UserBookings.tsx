@@ -16,7 +16,7 @@ export default function UserBookings() {
                 Upcoming Bookings
             </h1>
             {upcomingLoading && <Spinner className="mt-3" />}
-            <div className="grid grid-cols-1 md:grid-cols-2 mt-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 mt-5 gap-8">
                 {
                     upcomingBookings?.map((booking: TBooking) => (
                         <BookingCard booking={booking} key={booking._id} />
@@ -27,7 +27,7 @@ export default function UserBookings() {
                 Past Bookings
             </h1>
             {pastLoading && <Spinner className="mt-3" />}
-            <div className="grid grid-cols-1 md:grid-cols-2 mt-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 mt-5 gap-8">
                 {
                     pastBookings?.map((booking: TBooking) => (
                         <BookingCard booking={booking} key={booking._id} fromPast={true} />
