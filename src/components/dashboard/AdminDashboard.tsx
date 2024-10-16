@@ -8,10 +8,12 @@ export default function AdminDashboard() {
   return (
     <Tabs defaultActive="serviceManagement" className="mx-auto">
       <TabList>
-        <TabItem value="serviceManagement">Service Management</TabItem>
-        <TabItem value="slotManagement">Slot Management</TabItem>
-        <TabItem value="userManagement">User Management</TabItem>
-        <TabItem value="recentBookings">Recent Bookings</TabItem>
+        <div className="overflow-x-auto">
+          <TabItem value="serviceManagement">Service Management</TabItem>
+          <TabItem value="slotManagement">Slot Management</TabItem>
+          <TabItem value="userManagement">User Management</TabItem>
+          <TabItem value="recentBookings">Recent Bookings</TabItem>
+        </div>
       </TabList>
       <div className="py-3">
         <hr />

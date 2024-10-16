@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store";
-// import { logout, setUser } from "../features/auth/authSlice";
+import { logout } from "../features/auth/authSlice";
 
 const baseQuery = fetchBaseQuery({
     baseUrl: `${import.meta.env.VITE_API_URL}`,
@@ -13,43 +13,20 @@ const baseQuery = fetchBaseQuery({
     }
 })
 
-// const baseQueryWithRefreshToken: BaseQueryFn<
-//     FetchArgs,
-//     BaseQueryApi,
-//     DefinitionType
-// > = async (args, api, extraOptions): Promise<any> => {
-//     const result = await baseQuery(args, api, extraOptions);
+const baseQueryWithLogout: typeof baseQuery = async (args, api, extraOptions) => {
+    const result = await baseQuery(args, api, extraOptions);
 
-// if (result.error?.status === 401) {
-//     console.log("Sending refresh token");
+    if (result.error && result.error.status === 401) {
+        // Token has expired or is invalid, log the user out
+        api.dispatch(logout());
+    }
 
-//     const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/refresh-token`, {
-//         method: "POST",
-//         credentials: "include"
-//     });
-
-//     const data = await res.json();
-
-//     if (data?.data?.accessToken) {
-//         const user = (api.getState() as RootState).auth.user;
-
-//         api.dispatch(setUser({
-//             user,
-//             token: data.data.accessToken
-//         }))
-
-//         result = await baseQuery(args, api, extraOptions);
-//     } else {
-//         api.dispatch(logout())
-//     }
-// }
-
-//     return result;
-// }
+    return result;
+};
 
 export const baseApi = createApi({
     reducerPath: "baseApi",
-    baseQuery,
+    baseQuery: baseQueryWithLogout,
     tagTypes: ['Services', 'Slots', 'Users', 'Reviews'],
     endpoints: () => ({})
 });
