@@ -17,7 +17,7 @@ export default function BookingForm() {
 
     const { slotId } = useAppSelector((selector) => selector.slot)
     const { data } = useGetSlotByIdQuery(slotId || undefined);
-    const [createBooking, { data: creationData, isError }] = useCreateBookingMutation();
+    const [createBooking, { data: creationData, isError, isLoading }] = useCreateBookingMutation();
 
     const slot = data?.data;
     const creationResponse = creationData?.data;
@@ -154,7 +154,7 @@ export default function BookingForm() {
                     required
                 />
             </fieldset>
-            <Button type="submit">Confirm Booking</Button>
+            <Button type="submit" disabled={isLoading}>Confirm Booking</Button>
         </form>
     )
 }
