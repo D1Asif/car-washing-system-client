@@ -3,6 +3,9 @@ This is a complete cash wash booking and management system website. Visit the li
 
 This is the frontend repository of the project. To know about the backend, visit the backend repository: [Car Wash Booking System Backend](https://github.com/D1Asif/car-washing-system)
 
+**credentials**: 
+admin: abc@mail.com password: 12345678 user: tormuj@mail.com password: 12345678
+
 ## Technologies
 TypeScript, React, Redux Toolkit, RTK Query, Zod, React Router, Tailwind CSS, Keep React, AamarPay Payment
 
